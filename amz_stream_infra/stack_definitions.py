@@ -176,15 +176,14 @@ class StreamLanding(DataSetScopedConstruct):
         self.firehose = firehose.DeliveryStream(
             self,
             "Firehose",
-            destinations=[
-                destinations.S3Bucket(
+            destination=destinations.S3Bucket(
                     self.lz_bucket,
                     data_output_prefix=f"{
                         dataset_config['dataSetId']}/{prefix}",
                     error_output_prefix=f"errors/{
                         dataset_config['dataSetId']}/",
                 )
-            ],
+            ,
         )
 
         CfnOutput(self, "DeliveryStreamArn", value=self.firehose.delivery_stream_arn)
